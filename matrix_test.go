@@ -30,11 +30,12 @@ func TestNew(t *testing.T) {
 		width   Width
 		height  Height
 	}{
-		{nil, "valid", 3, 2},
-		{ErrNonPositiveWidth, "zero width", 0, 2},
-		{ErrNonPositiveWidth, "negative width", -1, 2},
-		{ErrNonPositiveHeight, "zero height", 3, 0},
-		{ErrNonPositiveHeight, "negative height", 3, -4},
+		{name: "valid", width: 3, height: 2},
+		{name: "zero width", width: 0, height: 2, wantErr: ErrNonPositiveWidth},
+		{name: "negative width", width: -1, height: 2, wantErr: ErrNonPositiveWidth},
+		{name: "zero height", width: 3, height: 0, wantErr: ErrNonPositiveHeight},
+		{name: "negative height", width: 3, height: -4, wantErr: ErrNonPositiveHeight},
+		{name: "both non-positive reports the width first", width: 0, height: 0, wantErr: ErrNonPositiveWidth},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
